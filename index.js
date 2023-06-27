@@ -4,6 +4,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
 const {dbConnection} = require('./db/dbConnection');
+const tickets = require('./routes/tickets');
 
 //Middlewares
 app.use(cors());
@@ -13,6 +14,9 @@ dotenv.config({path: '.env'});
 
 //DBCONNECTION
 dbConnection();
+
+//Routes
+app.use('/tickets',tickets);
 
 //Server
 const PORT = process.env.PORT || 3001;
