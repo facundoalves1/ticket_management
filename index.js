@@ -16,7 +16,8 @@ dotenv.config({path: '.env'});
 dbConnection();
 
 //Routes
-app.use('/tickets',tickets);
+//app.use('/tickets',tickets);
+app.use('/api',require('./routes'));
 
 //Server
 const PORT = process.env.PORT || 3001;
