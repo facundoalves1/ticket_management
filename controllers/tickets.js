@@ -1,7 +1,17 @@
-const {ticketSchema} = require('../models/tickets');
+const Ticket = require('../models/tickets');
 
-const postTicket = (req,res)=>{
-    res.send("Controller");
+const postTicket = async(req,res)=>{
+    
+    const {body} = req;
+
+    try {
+        const result = await Ticket.create(body);
+        res.status(200).send({result}); 
+    } catch (err) {
+        res.status(400).send("Error trying to save ticket: " + err);
+        console.log(result);
+    }
+    
 };
 
 const getTickets = (req,res)=>{
