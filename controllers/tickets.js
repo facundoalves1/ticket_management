@@ -1,6 +1,12 @@
 const Ticket = require('../models/tickets');
 
-const postTicket = async(req,res)=>{
+const printTicket = async(req,res)=>{
+
+    res.send('building');
+
+};
+
+const saveTicket = async(req,res)=>{
     
     const {body} = req;
 
@@ -11,11 +17,11 @@ const postTicket = async(req,res)=>{
         res.status(400).send("Error trying to save ticket: " + err);
         console.log(result);
     }
-    
+
 };
 
 const getTickets = (req,res)=>{
     res.send("Controller");
 };
 
-module.exports = {postTicket,getTickets};
+module.exports = {saveTicket,getTickets,printTicket};
