@@ -1,8 +1,10 @@
 const Ticket = require('../models/tickets');
+const {printer} = require('../utils/printer')
 
 const printTicket = async(req,res)=>{
 
-    res.send('building');
+    const result = await printer();
+    res.status(200).send(result);
 
 };
 
