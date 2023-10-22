@@ -5,8 +5,14 @@ const printTicket = async(req,res)=>{
     
     const {items} = req.body
 
-    const result = await printer(JSON.stringify(items));
-    res.status(200).send(result);
+    try {
+        const result = await printer(JSON.stringify(items));
+        res.status(200).send(req.body);
+    } catch (error) {
+        res.status(500).send("Issue with the printer: " + error)
+    }
+    
+    
 
 };
 
