@@ -2,8 +2,10 @@ const Ticket = require('../models/tickets');
 const {printer} = require('../utils/printer')
 
 const printTicket = async(req,res)=>{
+    
+    const {items} = req.body
 
-    const result = await printer();
+    const result = await printer(JSON.stringify(items));
     res.status(200).send(result);
 
 };
