@@ -4,9 +4,10 @@ const {printer} = require('../utils/printer')
 const printTicket = async(req,res)=>{
     
     const {items} = req.body
+    const {total} = req.body
 
     try {
-        const result = await printer(JSON.stringify(items));
+        const result = await printer(items,total);
         res.status(200).send(req.body);
     } catch (error) {
         res.status(500).send("Issue with the printer: " + error)

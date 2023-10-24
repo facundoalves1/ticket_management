@@ -1,23 +1,34 @@
-const escpos = require('escpos');
-escpos.USB = require('escpos-usb')
+const escpos = require("escpos");
+escpos.USB = require("escpos-usb");
 
-const printer = (data)=>{
+const printer = (items,total) => {
+  const device = new escpos.USB();
+  const options = { encoding: "GB18030" };
+  const execute = new escpos.Printer(device, options);
+  
+  device.open(function(err){
+    
+    execute
+    .font('a')
+    .align('ct')
+    .style('bu')
+    .size(0,0)
+    .feed(2)
+    .marginLeft(0)
+    .marginRight(0)
+    items.forEach((element)=>{
 
-    const device = new escpos.USB();
-    const options = { encoding: "GB18030" }
-    const execute = new escpos.Printer(device, options)
+      return execute.table([element.name,`\$${element.price}`])
 
-    device.open(function () {
-        execute
-          .font('a')
-          .align('ct')
-          .style('bu')
-          .size(1, 1)
-          .text(data)
-          .cut()
-          .close();
-      });
+    });
+
+    execute.feed(2)
+    .table(["TOTAL",`\$${total}`])
+    .feed(5)
+    .close()
+  });
 
 };
 
-module.exports = {printer};
+
+module.exports = { printer };

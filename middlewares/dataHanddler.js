@@ -8,9 +8,8 @@ const dataHandler = (req,res,next)=>{
         req.body.total = result;
         next();
     }else{
-        res.status(500).send("Middleware wasn't able to calculate the total");
+        res.status(500).send("Middleware wasn't able to calculate total");
     }
-
 
 };
 
