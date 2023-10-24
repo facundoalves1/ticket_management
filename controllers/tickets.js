@@ -3,9 +3,8 @@ const {printer} = require('../utils/printer')
 
 const printTicket = async(req,res)=>{
     
-    const {items} = req.body
-    const {total} = req.body
-
+    const {items,total} = req.body
+    
     try {
         const result = await printer(items,total);
         res.status(200).send(req.body);

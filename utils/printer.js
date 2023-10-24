@@ -1,4 +1,3 @@
-const { exec } = require("child_process");
 const escpos = require("escpos");
 escpos.USB = require("escpos-usb");
 
@@ -13,22 +12,29 @@ const printer = (items,total) => {
     .font('a')
     .align('ct')
     .style('bu')
+    .size(1,1)
+    .text("CASA ALVES")
     .size(0,0)
     .feed(2)
     .marginLeft(0)
     .marginRight(0)
+    .marginBottom(0)
+    .tableCustom([
+      {text:"Cant/Producto",align:"LEFT"},
+      {text:"Precio", align:"LEFT"}
+    ]);
+
     items.forEach((element)=>{
 
       //return execute.table([element.name,`\$${element.price}`])
       return execute.tableCustom([
-        {text:element.name, align:"LEFT"},
-        {text:`\$${element.price}`, align:"LEFT"}
+        {text:`${element.quantity}x${element.name}`, align:"LEFT"},
+        {text:`\$${element.price} c/u`, align:"LEFT"}
       ]);
 
     });
 
-    execute.feed(2)
-    .drawLine()
+    execute.drawLine()
     .tableCustom([{text:`Total: \$${total}`, align:"CENTER"}])
     .feed(5)
     .close()
