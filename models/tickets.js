@@ -3,8 +3,10 @@ const mongoose = require("mongoose");
 const ticketSchema = new mongoose.Schema({
   
     items: {
+      
       type: Array,
-      required: true
+      required: true,
+      
     },
 
     total: {

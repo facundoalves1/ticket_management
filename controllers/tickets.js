@@ -25,7 +25,7 @@ const saveTicket = async(req,res)=>{
         res.status(200).send({result}); 
     } catch (err) {
         res.status(400).send("Error trying to save ticket: " + err);
-        console.log(result);
+       
     }
 
 };
