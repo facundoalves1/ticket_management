@@ -1,5 +1,6 @@
 const Ticket = require('../models/tickets');
 const {printer} = require('../utils/printer')
+const {matchedData} = require('express-validator');
 
 const printTicket = async(req,res)=>{
     
@@ -18,16 +19,19 @@ const printTicket = async(req,res)=>{
 
 const saveTicket = async(req,res)=>{
     
-    const {body} = req;
+    const body = matchedData(req);
 
     try {
+
         const result = await Ticket.create(body);
-        res.status(200).send({result}); 
+        res.status(200).send({result});
+
     } catch (err) {
+
         res.status(400).send(`Error trying to save ticket: ${err}}`);
        
     }
-
+    
 };
 
 const deleteTicket = async(req,res)=>{
