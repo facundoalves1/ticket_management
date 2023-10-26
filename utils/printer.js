@@ -26,7 +26,6 @@ const printer = (items,total) => {
 
     items.forEach((element)=>{
 
-      //return execute.table([element.name,`\$${element.price}`])
       return execute.tableCustom([
         {text:`${element.quantity}x${element.name}`, align:"LEFT"},
         {text:`\$${element.price} c/u`, align:"LEFT"}
@@ -37,10 +36,10 @@ const printer = (items,total) => {
     execute.drawLine()
     .tableCustom([{text:`Total: \$${total}`, align:"CENTER"}])
     .feed(5)
-    .close()
+    .close();
+
   });
 
 };
-
 
 module.exports = { printer };

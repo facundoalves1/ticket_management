@@ -4,13 +4,19 @@ const {matchedData} = require('express-validator');
 
 const printTicket = async(req,res)=>{
     
-    const {items,total} = req.body
+    const body = matchedData(req);
+    const {items,total} = body;
     
     try {
+        console.log(items,total)
+
         const result = await printer(items,total);
-        res.status(200).send(req.body);
+        res.status(200).send({result});
+
     } catch (error) {
-        res.status(500).send(`Issue with the printer: ${error}`)
+
+        res.status(500).send(`Error with printer: ${error}`);
+
     }
     
     

@@ -4,7 +4,7 @@ const {dataHandler} = require('../middlewares/dataHanddler');
 const {saveTicket,getTickets,printTicket,deleteTicket} = require('../controllers/tickets');
 const {ticketValidator} = require('../validators/tickets');
 
-router.post('/printTicket', dataHandler, printTicket);
+router.post('/printTicket', dataHandler, ticketValidator, printTicket);
 
 router.post('/saveTicket', dataHandler, ticketValidator, saveTicket);
 
