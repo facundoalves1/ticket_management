@@ -2,7 +2,7 @@ const Item = require('../models/items');
 
 const createItem = (req,res)=>{
 
-    res.send('Building')
+    res.send('Building');
 
 };
 
