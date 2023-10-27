@@ -1,11 +1,12 @@
 const jwt = require('jsonwebtoken');
-const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET
 
-const signToken = async(user)=>{
-
+const signToken = (user)=>{
+    console.log(JWT_SECRET);
     const sign = jwt.sign(
 
         {
+            _id: user._id,
             userid: user.userid,
             role: user.role
         },
@@ -17,16 +18,16 @@ const signToken = async(user)=>{
         }
 
     );
-
+    
     return sign;
 
 };
 
-const tokenVerification = async(token)=>{
+const tokenVerification = (token)=>{
 
     try {
-
-        return jwt.verify(token, JWT_SECRET);
+        
+        return  jwt.verify(token, JWT_SECRET);
         
     } catch (error) {
 

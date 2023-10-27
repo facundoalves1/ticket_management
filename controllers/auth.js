@@ -72,7 +72,15 @@ const loginUser = async(req,res)=>{
         }
 
         userData.set('password', undefined, {strict: false});
-        res.status(200).send({userData});
+
+        const payload = {
+
+            token: await signToken(userData),
+            user: userData
+
+        }
+
+        res.status(200).send({payload});
 
     } catch (error) {
 

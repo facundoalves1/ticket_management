@@ -3,13 +3,14 @@ const router = express.Router();
 const {dataHandler} = require('../middlewares/dataHanddler');
 const {saveTicket,getTickets,printTicket,deleteTicket} = require('../controllers/tickets');
 const {ticketValidator, deleteTicketValidator} = require('../validators/tickets');
+const {verifyToken} = require('../middlewares/session');
 
-router.post('/printTicket', dataHandler, ticketValidator, printTicket);
+router.post('/printTicket',verifyToken, dataHandler, ticketValidator, printTicket);
 
-router.post('/saveTicket', dataHandler, ticketValidator, saveTicket);
+router.post('/saveTicket', verifyToken, dataHandler, ticketValidator, saveTicket);
 
-router.get('/getTickets', getTickets);
+router.get('/getTickets', verifyToken, getTickets);
 
-router.delete('/deleteTicket', deleteTicketValidator, deleteTicket);
+router.delete('/deleteTicket',verifyToken, deleteTicketValidator, deleteTicket);
 
 module.exports = router;
