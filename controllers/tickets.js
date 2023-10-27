@@ -18,8 +18,6 @@ const printTicket = async(req,res)=>{
 
     }
     
-    
-
 };
 
 const saveTicket = async(req,res)=>{
@@ -71,8 +69,12 @@ const getTickets = async(req,res)=>{
         
     }
     
+};
 
+const getUserTickets = async(req,res)=>{
+
+    res.send('Building');
 
 };
 
-module.exports = {saveTicket,getTickets,printTicket,deleteTicket,getTickets};
+module.exports = {saveTicket,getTickets,getUserTickets,printTicket,deleteTicket,getTickets};

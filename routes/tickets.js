@@ -1,16 +1,22 @@
 const express = require('express');
 const router = express.Router();
 const {dataHandler} = require('../middlewares/dataHanddler');
-const {saveTicket,getTickets,printTicket,deleteTicket} = require('../controllers/tickets');
+const {saveTicket,getTickets,getUserTickets,printTicket,deleteTicket} = require('../controllers/tickets');
 const {ticketValidator, deleteTicketValidator} = require('../validators/tickets');
 const {verifyToken} = require('../middlewares/session');
+const {roleValidation} = require('../middlewares/roleValidation');
 
-router.post('/printTicket',verifyToken, dataHandler, ticketValidator, printTicket);
+const everyone = ["user","admin"];
+const admin = ["admin"];
 
-router.post('/saveTicket', verifyToken, dataHandler, ticketValidator, saveTicket);
+router.post('/printTicket',verifyToken, roleValidation(everyone), dataHandler, ticketValidator, printTicket);
 
-router.get('/getTickets', verifyToken, getTickets);
+router.post('/saveTicket', verifyToken, roleValidation(everyone), dataHandler, ticketValidator, saveTicket);
 
-router.delete('/deleteTicket',verifyToken, deleteTicketValidator, deleteTicket);
+router.get('/getTickets', verifyToken, roleValidation(admin), getTickets);
+
+router.get('/getUserTickets', verifyToken, roleValidation(everyone), getUserTickets);
+
+router.delete('/deleteTicket',verifyToken, roleValidation(everyone), deleteTicketValidator, deleteTicket);
 
 module.exports = router;
