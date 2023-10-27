@@ -8,7 +8,6 @@ const printTicket = async(req,res)=>{
     const {items,total} = body;
     
     try {
-        console.log(items,total)
 
         const result = await printer(items,total);
         res.status(200).send({result});
@@ -42,11 +41,13 @@ const saveTicket = async(req,res)=>{
 
 const deleteTicket = async(req,res)=>{
 
-    const {_id} = req.params;
+    const params = matchedData(req);
+    const {_id} = params;
+    console.log(_id);
 
     try {
 
-        const result = await Ticket.delete(_id);
+        const result = await Ticket.delete({_id});
         res.status(200).send({result})
         
     } catch (error) {
