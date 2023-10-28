@@ -33,7 +33,7 @@ const saveTicket = async(req,res)=>{
 
     } catch (error) {
 
-        handleHttp(res, 400, "ERROR_TRYING_TO_SAVE_TICKET", error);
+        handleHttp(res, 500, "ERROR_TRYING_TO_SAVE_TICKET", error);
 
     }
     
@@ -46,13 +46,13 @@ const deleteTicket = async(req,res)=>{
 
     try {
 
-        const result = await Ticket.delete({_id});
+        const result = await Ticket.delete(_id);
         
         handleHttp(res, 200, "TICKET_DELETED", result);
         
     } catch (error) {
 
-        handleHttp(res, 400, "ERROR_TRYING_TO_DELETE_TICKET", error);
+        handleHttp(res, 500, "ERROR_TRYING_TO_DELETE_TICKET", error);
         
     }
 
@@ -68,7 +68,7 @@ const getTickets = async(req,res)=>{
 
     } catch (error) {
 
-        handleHttp(res, 400, "ERROR_TRYING_TO_GET_ITEMS", error);
+        handleHttp(res, 500, "ERROR_TRYING_TO_GET_ITEMS", error);
         
     }
     
@@ -76,7 +76,20 @@ const getTickets = async(req,res)=>{
 
 const getUserTickets = async(req,res)=>{
 
-    res.send('Building');
+    try {
+
+        const params = matchedData(req);
+        const {_id} = params;
+        
+        const result = await Ticket.findByUserId({_id});
+        console.log(result)
+        handleHttp(res, 200, "TICKETS_SUCCESSFULLY_RETRIEVED", result);
+
+    } catch (error) {
+        console.log(error);
+        handleHttp(res, 500, "ERROR_TRYING_TO_GET_ITEMS", error);
+
+    }
 
 };
 

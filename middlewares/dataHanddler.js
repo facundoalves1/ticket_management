@@ -1,7 +1,7 @@
 const {calculator} = require('../utils/calculator');
 const {handleHttp} = require('../utils/handleHttp');
 
-const dataHandler = (req,res,next)=>{
+const totalCalculation = (req,res,next)=>{
 
     const result = calculator(req);
     
@@ -13,7 +13,25 @@ const dataHandler = (req,res,next)=>{
 
     req.body.total = result;
     next();
-    
+
 };
 
-module.exports = {dataHandler};
+const createAudit = (req,res,next) =>{
+
+    const {_id, name} = req.user;
+
+    if(!_id){
+
+        handleHttp(res, 500, "USER_INFORMATION_NOT_FOUND", req);
+
+    }
+    
+    req.body.createdBy = _id;
+    req.body.updatedBy = _id;
+    req.body.createdByDisplayValue = name;
+    req.body.updatedByDisplayValue = name;
+    next();
+
+};
+
+module.exports = {totalCalculation, createAudit};

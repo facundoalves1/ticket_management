@@ -15,7 +15,36 @@ const ticketSchema = new mongoose.Schema({
       type: Number,
       required: true,
       
+    },
+
+    createdBy: {
+
+      type: mongoose.Types.ObjectId,
+      required: true
+
+    },
+
+    updatedBy: {
+
+      type: mongoose.Types.ObjectId,
+      required: true
+
+    },
+
+    createdByDisplayValue: {
+
+      type: String,
+      required: true
+
+    },
+
+    updatedByDisplayValue: {
+
+      type: String,
+      required: true
+
     }
+
   },
   {
     toJSON: { virtuals: true },
