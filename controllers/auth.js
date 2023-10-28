@@ -2,6 +2,7 @@ const User = require('../models/users');
 const {matchedData} = require('express-validator');
 const {encryptPassword, comparePassword} = require('../utils/handlePassword');
 const {signToken} = require('../utils/handleJwt');
+const {handleHttp} = require('../utils/handleHttp');
 
 /**
  * Create user controller
@@ -29,12 +30,12 @@ const createUser = async(req,res)=>{
 
         }
 
-        res.status(200).send({payload});
+        handleHttp(res, 200, "USER_CREATED_SUCCESSFULLY", payload);
     
     } catch (error) {
 
-        res.status(400).send(`ERROR_TRYING_TO_CREATE_USER: ${error}`);
-        
+        handleHttp(res, 400, "ERROR_TRYING_TO_CREATE_USER", error);
+
     }
 
 };
@@ -56,7 +57,7 @@ const loginUser = async(req,res)=>{
 
         if(!userData){
 
-            res.status(404).send('USER_NOT_FOUND');
+            handleHttp(res, 400, "USER_NOT_FOUND", body);
             return
 
         }
@@ -66,7 +67,7 @@ const loginUser = async(req,res)=>{
 
         if(!checkUserPass){
 
-            res.status(401).send('INVALID_PASSWORD');
+            handleHttp(res, 400, "INVALID_PASSWORD", body);
             return
 
         }
@@ -80,11 +81,11 @@ const loginUser = async(req,res)=>{
 
         }
 
-        res.status(200).send({payload});
+        handleHttp(res, 200, "LOGIN_SUCCESSFULL", body);
 
     } catch (error) {
 
-        res.status(500).send(`LOGING_USER_ERROR: ${error}`);
+        handleHttp(res, 400, "LOGING_ERROR", error);
         
     }
 
