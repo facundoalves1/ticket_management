@@ -12,7 +12,7 @@ const dataHandler = (req,res,next)=>{
 
     }else{
         
-        res.status(500).send("Middleware wasn't able to calculate total");
+        res.status(500).send("ERROR_TOTAL_CALCULATION");
 
     }
 

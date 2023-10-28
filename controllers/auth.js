@@ -33,7 +33,7 @@ const createUser = async(req,res)=>{
     
     } catch (error) {
 
-        res.status(400).send(`ERROR TRYING TO CREATE USER: ${error}`);
+        res.status(400).send(`ERROR_TRYING_TO_CREATE_USER: ${error}`);
         
     }
 
@@ -56,7 +56,7 @@ const loginUser = async(req,res)=>{
 
         if(!userData){
 
-            res.status(404).send("USER_NOT_FOUND");
+            res.status(404).send('USER_NOT_FOUND');
             return
 
         }
@@ -66,7 +66,7 @@ const loginUser = async(req,res)=>{
 
         if(!checkUserPass){
 
-            res.status(401).send("INVALID_PASSWORD");
+            res.status(401).send('INVALID_PASSWORD');
             return
 
         }
