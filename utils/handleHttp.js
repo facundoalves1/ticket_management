@@ -7,7 +7,7 @@
  */
 const handleHttp = (res,code,message,result)=>{
 
-    res.status(code).json({result: result, code: code, message: message});
+    res.status(code).json({payload: result, status: code, message: message});
 
 };
 
