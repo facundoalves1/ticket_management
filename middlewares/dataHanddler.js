@@ -1,21 +1,19 @@
 const {calculator} = require('../utils/calculator');
+const {handleHttp} = require('../utils/handleHttp');
 
 const dataHandler = (req,res,next)=>{
 
     const result = calculator(req);
     
-    if(result){
+    if(!result){
 
-        req.body.total = result;
-        
-        next();
-
-    }else{
-        
-        res.status(500).send("ERROR_TOTAL_CALCULATION");
-
+        handleHttp(res, 500, "DATA_CALCULATION_ERROR");
+        return
     }
 
+    req.body.total = result;
+    next();
+    
 };
 
 module.exports = {dataHandler};

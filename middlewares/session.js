@@ -1,4 +1,5 @@
 const {tokenVerification} = require('../utils/handleJwt');
+const {handleHttp} = require('../utils/handleHttp');
 const User = require('../models/users');
 
 const verifyToken = async(req,res,next)=>{
@@ -9,8 +10,9 @@ const verifyToken = async(req,res,next)=>{
 
         if(!authorization){
 
-            res.status(400).send("AUTHORIZATION_METHOD_REQUIRED");
+            handleHttp(res, 400, "AUTHORIZATION_METHOD_REQUIRED");
             return
+
         }
 
         const token = authorization.split(" ").pop();
@@ -18,8 +20,9 @@ const verifyToken = async(req,res,next)=>{
         
         if(!tokenData){
 
-            res.status(400).send("PAYLOAD_DATA_NOT_FOUND");
+            handleHttp(res, 400, "PAYLOAD_DATA_NOT_FOUND");
             return
+
         }
 
         const {_id} = tokenData
@@ -31,7 +34,7 @@ const verifyToken = async(req,res,next)=>{
 
     } catch (error) {
 
-        res.status(500).send(`ERROR_TRYING_TO_VERIFY_SESSION: ${error}`);
+        handleHttp(res, 500, "SESSION_VERIFICATION_ERROR", error);
         
     }
 

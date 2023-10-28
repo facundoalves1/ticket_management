@@ -1,4 +1,5 @@
-const {validationResult} = require("express-validator");
+const {validationResult} = require('express-validator');
+const {handleHttp} = require('../utils/handleHttp');
 
 /**
  * 
@@ -14,9 +15,9 @@ const validateResults = (req,res,next)=>{
         validationResult(req).throw();
         return next();
         
-    } catch (err) {
+    } catch (error) {
 
-        res.status(400).send({error: err.array()});
+        handleHttp(res, 400, "DATA_VALIDATION_ERROR", error);
         
     }
 

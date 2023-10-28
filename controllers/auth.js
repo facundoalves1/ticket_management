@@ -81,7 +81,7 @@ const loginUser = async(req,res)=>{
 
         }
 
-        handleHttp(res, 200, "LOGIN_SUCCESSFULL", body);
+        handleHttp(res, 200, "LOGIN_SUCCESSFULL", payload);
 
     } catch (error) {
 

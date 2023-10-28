@@ -64,7 +64,7 @@ const getTickets = async(req,res)=>{
         
         const result = await Ticket.find();
         
-        handleHttp(res, 200, "TICKETS_SUCCESSFULLY_RETRIEVED")
+        handleHttp(res, 200, "TICKETS_SUCCESSFULLY_RETRIEVED", result);
 
     } catch (error) {
 

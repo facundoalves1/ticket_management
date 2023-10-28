@@ -1,3 +1,5 @@
+const {handleHttp} = require('../utils/handleHttp');
+
 /**
  * Role validation
  * @param {*} allowedRole 
@@ -17,15 +19,16 @@ const roleValidation = (allowedRole)=> (req,res,next)=>{
 
         if(!checkRole){
 
-            res.status(403).send("ACCESS_DENIED: USER_WITHOUT_PROPER_ROLE");
+            handleHttp(res, 401, "ACCESS_DENIED");
             return
+            
         }
 
         next();
 
     } catch (error) {
 
-        res.status(500).send(`UNABLE_TO_VALIDATE_ROLE: ${error}}`);
+        handleHttp(res, 500, "ROLE_VALIDATION_ERROR", error);
         
     }
 

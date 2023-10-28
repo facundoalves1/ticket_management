@@ -4,10 +4,10 @@ const {validateResults} = require('../utils/handleValidators');
 const ticketValidator = [
     
     check("items").exists().isArray(),
-    check("items.*.quantity").exists().isInt().notEmpty(),
+    check("items.*.quantity").exists().isInt({min:1}).notEmpty(),
     check("items.*.name").exists().isString().notEmpty(),
-    check("items.*.price").exists().isInt().notEmpty(),
-    check("total").exists().isInt().notEmpty(),
+    check("items.*.price").exists().isInt({min:1}).notEmpty(),
+    check("total").exists().isInt({min:1}).notEmpty(),
     (req,res,next)=>{
 
         return validateResults(req,res,next);
