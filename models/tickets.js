@@ -49,13 +49,9 @@ const ticketSchema = new mongoose.Schema({
   },
   {
     statics: {
-
       findByUser(_id){
-
-        return this.aggregate([
-
+       return this.aggregate([
           {
-
             $lookup: {
 
               from: 'users',
@@ -64,27 +60,28 @@ const ticketSchema = new mongoose.Schema({
               as: 'user'
 
             }
-
           },
           {
-
             $match: {
 
               createdBy: new mongoose.Types.ObjectId(_id)
 
             }
-
           },
           {
 
             $unwind: '$user'
 
+          },
+          {
+            $project: {
+
+              'user.password': 0
+
+            }
           }
-
         ])
-
       }
-
     }
   },
   {
