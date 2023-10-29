@@ -1,3 +1,4 @@
+const { lookup } = require("dns");
 const mongoose = require("mongoose");
 const mongoose_delete = require("mongoose-delete");
 
@@ -45,6 +46,46 @@ const ticketSchema = new mongoose.Schema({
 
     }
 
+  },
+  {
+    statics: {
+
+      findByUser(_id){
+
+        return this.aggregate([
+
+          {
+
+            $lookup: {
+
+              from: 'users',
+              localField: 'createdBy',
+              foreignField: '_id',
+              as: 'user'
+
+            }
+
+          },
+          {
+
+            $match: {
+
+              createdBy: new mongoose.Types.ObjectId(_id)
+
+            }
+
+          },
+          {
+
+            $unwind: '$user'
+
+          }
+
+        ])
+
+      }
+
+    }
   },
   {
     toJSON: { virtuals: true },

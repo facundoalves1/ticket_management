@@ -78,15 +78,14 @@ const getUserTickets = async(req,res)=>{
 
     try {
 
-        const params = matchedData(req);
-        const {_id} = params;
+        const {_id} = req.user;
         
-        const result = await Ticket.findByUserId({_id});
-        console.log(result)
+        const result = await Ticket.findByUser(_id);
+        
         handleHttp(res, 200, "TICKETS_SUCCESSFULLY_RETRIEVED", result);
 
     } catch (error) {
-        console.log(error);
+        
         handleHttp(res, 500, "ERROR_TRYING_TO_GET_ITEMS", error);
 
     }

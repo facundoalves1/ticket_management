@@ -15,7 +15,7 @@ router.post('/saveTicket', verifyToken, roleValidation(everyone), createAudit, t
 
 router.get('/getTickets', verifyToken, roleValidation(admin), getTickets);
 
-router.get('/getUserTickets', verifyToken, roleValidation(everyone), paramsValidator, getUserTickets);
+router.get('/getUserTickets', verifyToken, roleValidation(everyone), getUserTickets);
 
 router.delete('/deleteTicket',verifyToken, roleValidation(everyone), paramsValidator, deleteTicket);
 

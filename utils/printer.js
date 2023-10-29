@@ -1,5 +1,5 @@
-const escpos = require("escpos");
-escpos.USB = require("escpos-usb");
+const escpos = require('escpos');
+escpos.USB = require('escpos-usb');
 
 const printer = (items,total) => {
   const device = new escpos.USB();
