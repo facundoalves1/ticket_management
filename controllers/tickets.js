@@ -6,11 +6,12 @@ const {handleHttp} = require('../utils/handleHttp');
 const printTicket = async(req,res)=>{
     
     const body = matchedData(req);
+    const {name} = req.user;
     const {items,total} = body;
     
     try {
 
-        const result = await printer(items,total);
+        const result = await printer(items,total,name);
         handleHttp(res, 200, "TICKET_PRINTED", result);
 
     } catch (error) {
@@ -42,11 +43,11 @@ const saveTicket = async(req,res)=>{
 const deleteTicket = async(req,res)=>{
 
     const params = matchedData(req);
-    const {_id} = params;
+    const {ticketId} = params;
 
     try {
 
-        const result = await Ticket.delete(_id);
+        const result = await Ticket.delete(ticketId);
         
         handleHttp(res, 200, "TICKET_DELETED", result);
         

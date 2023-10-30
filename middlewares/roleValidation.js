@@ -1,7 +1,7 @@
 const {handleHttp} = require('../utils/handleHttp');
 
 /**
- * Role validation
+ * Role validation and status
  * @param {*} allowedRole 
  * @returns 
  */
@@ -9,7 +9,13 @@ const roleValidation = (allowedRole)=> (req,res,next)=>{
 
     try {
 
-        const {role} = req.user;
+        const {role, active} = req.user;
+
+        if(!active){
+
+            handleHttp(res, 401, "INACTIVE_USER");
+
+        }
         
         const checkRole = allowedRole.some((element)=>{
 
@@ -28,7 +34,7 @@ const roleValidation = (allowedRole)=> (req,res,next)=>{
 
     } catch (error) {
 
-        handleHttp(res, 500, "ROLE_VALIDATION_ERROR", error);
+        handleHttp(res, 500, "ROLE_VALIDATION_ERROR");
         
     }
 

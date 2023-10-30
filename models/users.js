@@ -3,6 +3,13 @@ const mongoose_delete = require('mongoose-delete');
 
 const userSchema = new mongoose.Schema({
 
+    active: {
+
+        type: Boolean,
+        default: true
+
+    },
+
     name: {
 
         type: String,
@@ -29,6 +36,34 @@ const userSchema = new mongoose.Schema({
         type: ["user","admin"],
         default: "user"
 
+    },
+
+    createdBy: {
+
+        type: mongoose.Types.ObjectId,
+        required: true
+  
+      },
+  
+    updatedBy: {
+  
+        type: mongoose.Types.ObjectId,
+        required: true
+  
+    },
+  
+    createdByDisplayValue: {
+  
+        type: String,
+        required: true
+  
+    },
+  
+    updatedByDisplayValue: {
+  
+        type: String,
+        required: true
+  
     }
 
 },

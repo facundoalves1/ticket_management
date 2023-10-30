@@ -1,4 +1,4 @@
-const {check} = require('express-validator');
+const {check, param} = require('express-validator');
 const {validateResults} = require('../utils/handleValidators');
 
 const ticketValidator = [
@@ -20,9 +20,9 @@ const ticketValidator = [
 
 ];
 
-const paramsValidator = [
+const ticketParamsValidator = [
 
-    check('_id').exists().notEmpty().isMongoId(),
+    param('ticketId').exists().notEmpty().isMongoId(),
     (req,res,next)=>{
 
         return validateResults(req,res,next);
@@ -31,4 +31,4 @@ const paramsValidator = [
 
 ];
 
-module.exports = {ticketValidator, paramsValidator};
+module.exports = {ticketValidator, ticketParamsValidator};

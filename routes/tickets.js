@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const {totalCalculation, createAudit} = require('../middlewares/dataHanddler');
+const {totalCalculation, defaultValues} = require('../middlewares/dataHandler');
 const {saveTicket,getTickets,getUserTickets,printTicket,deleteTicket} = require('../controllers/tickets');
-const {ticketValidator, paramsValidator} = require('../validators/tickets');
+const {ticketValidator, ticketParamsValidator} = require('../validators/tickets');
 const {verifyToken} = require('../middlewares/session');
 const {roleValidation} = require('../middlewares/roleValidation');
 
@@ -11,12 +11,12 @@ const admin = ["admin"];
 
 router.post('/printTicket',verifyToken, roleValidation(everyone), totalCalculation, ticketValidator, printTicket);
 
-router.post('/saveTicket', verifyToken, roleValidation(everyone), createAudit, totalCalculation, ticketValidator, saveTicket);
+router.post('/saveTicket', verifyToken, roleValidation(everyone), defaultValues, totalCalculation, ticketValidator, saveTicket);
 
 router.get('/getTickets', verifyToken, roleValidation(admin), getTickets);
 
 router.get('/getUserTickets', verifyToken, roleValidation(everyone), getUserTickets);
 
-router.delete('/deleteTicket',verifyToken, roleValidation(everyone), paramsValidator, deleteTicket);
+router.delete('/deleteTicket/:ticketId',verifyToken, roleValidation(everyone), ticketParamsValidator, deleteTicket);
 
 module.exports = router;

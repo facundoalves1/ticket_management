@@ -17,7 +17,7 @@ const validateResults = (req,res,next)=>{
         
     } catch (error) {
 
-        handleHttp(res, 400, "DATA_VALIDATION_ERROR", error);
+        handleHttp(res, 400, "DATA_VALIDATION_ERROR");
         
     }
 
