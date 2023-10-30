@@ -1,14 +1,18 @@
 const escpos = require('escpos');
 escpos.USB = require('escpos-usb');
+const usb = require('usb');
 const {handleHttp} = require('../utils/handleHttp');
 
 const printer = async(items,total,name) => {
 
   try {
     
+    const devices = usb.getDeviceList();
+    console.log(devices);
+
     const device = new escpos.USB();
     const options = { encoding: "GB18030" };
-    const execute = new escpos.Printer(device, options);
+    const execute = new escpos.Printer(device, options);  
     
     device.open(function(err){
     
