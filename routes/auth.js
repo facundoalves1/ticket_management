@@ -13,6 +13,6 @@ router.post('/createUser', verifyToken, roleValidation(admin), defaultValues, re
 
 router.post('/login', loginValidator, loginUser);
 
-router.patch('/deactivateUser/:userId/:state', verifyToken, roleValidation(admin), authParamValidator, userState);
+router.patch('/deactivateUser/:userId/:state', verifyToken, roleValidation(admin), defaultValues, authParamValidator, userState);
 
 module.exports = router;

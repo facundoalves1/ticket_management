@@ -54,7 +54,9 @@ const addDefaultFields = (userId, userName, req)=>{
       }
 
     }
-    
+  
+    req.body.updatedBy = userId;
+    req.body.updatedByDisplayValue = userName;
 }
 
 module.exports = {calculator, addDefaultFields};

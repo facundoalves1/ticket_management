@@ -122,6 +122,7 @@ const userState = async(req,res)=>{
         
         const params = matchedData(req);
         const {userId, state} = params;
+        const {updatedBy, updatedByDisplayValue} = req.body
 
         const userData = await User.findOne({_id: userId});
 
@@ -132,15 +133,15 @@ const userState = async(req,res)=>{
         }
 
         const userState = userData.get('active');
-
-        if(state == userState){
+        
+        if(state === userState.toString()){
 
             handleHttp(res, 400, "USER_STATE_ERROR");
             return
 
         }
 
-        const payload = await User.updateOne({_id: userId}, {active: state});
+        const payload = await User.updateOne({_id: userId}, {active: state, updatedBy: updatedBy, updatedByDisplayValue: updatedByDisplayValue});
 
         if(!payload){
 
@@ -152,6 +153,7 @@ const userState = async(req,res)=>{
         handleHttp(res, 200, "UPDATED_SUCCESSFULLY", payload);
 
     } catch (error) {
+
         console.log(error)
         handleHttp(res, 500, "UPDATE_ERROR");
         
