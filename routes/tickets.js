@@ -9,7 +9,7 @@ const {roleValidation} = require('../middlewares/roleValidation');
 const everyone = ["user","admin"];
 const admin = ["admin"];
 
-router.post('/printTicket',verifyToken, roleValidation(everyone), totalCalculation, ticketValidator, printTicket);
+router.post('/printTicket',verifyToken, roleValidation(everyone), ticketValidator, printTicket);
 
 router.post('/saveTicket', verifyToken, roleValidation(everyone), defaultValues, totalCalculation, ticketValidator, saveTicket);
 

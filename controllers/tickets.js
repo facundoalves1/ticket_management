@@ -11,12 +11,12 @@ const printTicket = async(req,res)=>{
     
     try {
 
-        const result = await printer(items,total,name);
+        const result = await printer(items,total,name,res);
         handleHttp(res, 200, "TICKET_PRINTED", result);
 
     } catch (error) {
-
-        handleHttp(res, 500, "PRINTER_ERROR", error);
+        console.log(error)
+        handleHttp(res, 500, "PRINTER_ERROR");
 
     }
     

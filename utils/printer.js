@@ -48,8 +48,9 @@ const printer = async(items,total,name) => {
     
   } catch (error) {
     
+    console.log(error);
     handleHttp(res, 500, "PRINTER_ERROR");
-    
+
   }
 
 };
