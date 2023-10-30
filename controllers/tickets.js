@@ -1,20 +1,20 @@
 const Ticket = require('../models/tickets');
-const {printer} = require('../utils/printer')
 const {matchedData} = require('express-validator');
 const {handleHttp} = require('../utils/handleHttp');
+const axios = require('axios');
 
 const printTicket = async(req,res)=>{
     
     const body = matchedData(req);
-    const {name} = req.user;
-    const {items,total} = body;
     
     try {
 
-        const result = await printer(items,total,name,res);
-        handleHttp(res, 200, "TICKET_PRINTED", result);
+        await axios.post('https://n54rz7dz-3001.brs.devtunnels.ms/api/ticket/printTicket', body, {headers: {'Content-Type': 'application/json'}})
+
+        handleHttp(res, 200, "TICKET_PRINTED");
 
     } catch (error) {
+
         console.log(error)
         handleHttp(res, 500, "PRINTER_ERROR");
 
