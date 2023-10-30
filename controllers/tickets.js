@@ -87,6 +87,7 @@ const getUserTickets = async(req,res)=>{
 
     } catch (error) {
         
+        console.log(error);
         handleHttp(res, 500, "ERROR_TRYING_TO_GET_ITEMS", error);
 
     }

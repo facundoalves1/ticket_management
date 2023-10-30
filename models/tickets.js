@@ -48,6 +48,10 @@ const ticketSchema = new mongoose.Schema({
 
   },
   {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+    timestamps: true,
+    versionKey: false, 
     statics: {
       findByUser(_id){
        return this.aggregate([
@@ -83,12 +87,6 @@ const ticketSchema = new mongoose.Schema({
         ])
       }
     }
-  },
-  {
-    toJSON: { virtuals: true },
-    toObject: { virtuals: true },
-    timestamps: true,
-    versionKey: false, 
   });
 
 ticketSchema.plugin(mongoose_delete,{overrideMethods:"all", deletedAt:true});  
