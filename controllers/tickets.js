@@ -47,12 +47,13 @@ const deleteTicket = async(req,res)=>{
 
     try {
 
-        const result = await Ticket.delete(ticketId);
+        const result = await Ticket.delete({_id: ticketId});
         
         handleHttp(res, 200, "TICKET_DELETED", result);
         
     } catch (error) {
 
+        console.log(error);
         handleHttp(res, 500, "ERROR_TRYING_TO_DELETE_TICKET", error);
         
     }
