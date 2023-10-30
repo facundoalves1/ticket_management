@@ -44,8 +44,11 @@ const deleteTicket = async(req,res)=>{
 
     const params = matchedData(req);
     const {ticketId} = params;
+    const {updatedBy, updatedByDisplayValue} = req.body
 
     try {
+        
+        await Ticket.updateOne({_id: ticketId}, {updatedBy: updatedBy, updatedByDisplayValue: updatedByDisplayValue});
 
         const result = await Ticket.delete({_id: ticketId});
         

@@ -17,6 +17,6 @@ router.get('/getTickets', verifyToken, roleValidation(admin), getTickets);
 
 router.get('/getUserTickets', verifyToken, roleValidation(everyone), getUserTickets);
 
-router.delete('/deleteTicket/:ticketId',verifyToken, roleValidation(everyone), ticketParamsValidator, deleteTicket);
+router.delete('/deleteTicket/:ticketId',verifyToken, roleValidation(everyone), defaultValues, ticketParamsValidator, deleteTicket);
 
 module.exports = router;
