@@ -19,7 +19,7 @@ router.get('/getUserTickets', verifyToken, roleValidation(everyone), getUserTick
 
 router.get('/getUserTicketsToday', verifyToken, roleValidation(everyone), getUserTicketsToday);
 
-router.get('/getTicketsToday', verifyToken, roleValidation(everyone), getTicketsToday);
+//router.get('/getTicketsToday', verifyToken, roleValidation(everyone), getTicketsToday);
 
 router.delete('/deleteTicket/:ticketId',verifyToken, roleValidation(everyone), defaultValues, ticketParamsValidator, deleteTicket);
 

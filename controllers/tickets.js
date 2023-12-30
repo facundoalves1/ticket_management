@@ -98,16 +98,7 @@ const getUserTickets = async(req,res)=>{
 
 };
 
-const getTodayTickets = async(req,res)=>{
-
-    try {
-        
+const getUserTicketsToday = async(req,res)=>{}
 
 
-    } catch (error) {
-        
-    }
-
-};
-
-module.exports = {saveTicket,getTickets,getUserTickets,printTicket,deleteTicket,getTickets,getTodayTickets};
+module.exports = {saveTicket,getTickets,getUserTickets,printTicket,deleteTicket,getTickets, getUserTicketsToday};
