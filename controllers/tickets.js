@@ -110,6 +110,4 @@ const getTodayTickets = async(req,res)=>{
 
 };
 
-const getTicketsToday = async(req,res=>{})
-
-module.exports = {saveTicket,getTickets,getUserTickets,printTicket,deleteTicket,getTickets,getTicketsToday};
+module.exports = {saveTicket,getTickets,getUserTickets,printTicket,deleteTicket,getTickets,getTodayTickets};
