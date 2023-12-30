@@ -9,8 +9,8 @@ const printTicket = async(req,res)=>{
     
     try {
 
-        await axios.post('https://n54rz7dz-3001.brs.devtunnels.ms/api/ticket/printTicket', body, {headers: {'Content-Type': 'application/json'}})
-
+        await axios.post('https://b46fxbpk-3001.brs.devtunnels.ms/api/ticket/printTicket', body, {headers: {'Content-Type': 'application/json'}})
+        
         handleHttp(res, 200, "TICKET_PRINTED");
 
     } catch (error) {
@@ -98,4 +98,16 @@ const getUserTickets = async(req,res)=>{
 
 };
 
-module.exports = {saveTicket,getTickets,getUserTickets,printTicket,deleteTicket,getTickets};
+const getTodayTickets = async(req,res)=>{
+
+    try {
+        
+
+
+    } catch (error) {
+        
+    }
+
+};
+
+module.exports = {saveTicket,getTickets,getUserTickets,printTicket,deleteTicket,getTickets,getTicketsToday};

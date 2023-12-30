@@ -15,8 +15,22 @@ const ItemSchema = new mongoose.Schema({
     code: {
         type: Number,
         require: true
+    },
+
+    category: {
+
+        type: String,
+        required: true,
+        default: "General"
+
     }
 
+},
+{
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+    timestamps: true,
+    versionKey: false, 
 });
 
 module.exports = mongoose.model('Item',ItemSchema);
