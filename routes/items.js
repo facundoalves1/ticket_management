@@ -1,9 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const {createItem,getItem} = require('../controllers/items');
+const {verifyToken} = require('../middlewares/session');
+const {roleValidation} = require('../middlewares/roleValidation');
+const {getItems, createItems} = require('../controllers/items');
+const {defaultValues} = require('../middlewares/dataHandler');
+const {itemValidator} = require('../validators/items');
 
-router.post('/createItem',createItem);
+const everyone = ["user","admin"];
+const admin = ["admin"];
 
-router.get('/getItem',getItem);
+router.get('/getItems', verifyToken, roleValidation(everyone), getItems);
 
-module.exports = router
+router.post('/createItem', verifyToken, roleValidation(admin), defaultValues, itemValidator, createItems);
+
+module.exports = router;

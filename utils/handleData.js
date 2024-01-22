@@ -1,21 +1,19 @@
+const Item = require("../models/items");
+
 /**
  * Returns sumatory of price * quantity
- * @param {*} req 
- * @returns 
+ * @param {*} req
+ * @returns
  */
 const calculator = (req) => {
+  const { items } = req.body;
 
-    const { items } = req.body;
-    
-    const result = items.reduce((acc, current) => {
-      
-      return acc + current.price * current.quantity;
-      
-    }, 0);
-    
-    return result;
+  const result = items.reduce((acc, current) => {
+    return acc + current.price * current.quantity;
+  }, 0);
 
-  };
+  return result;
+};
 
 /**
  * Add fields and values for aditory
@@ -23,42 +21,78 @@ const calculator = (req) => {
  * @param {*} userName
  * @param {*} req
  */
-const addDefaultFields = (userId, userName, req)=>{
+const addDefaultFields = (userId, userName, req) => {
+  const allowedPaths = ["/createUser", "/createItem", "/saveTicket"];
+  const path = req.route.path;
 
-    const allowedPaths = ['/createUser','/createItem','/saveTicket'];
-    const path = req.route.path;
-    
-    if(!userId || !userName){
+  if (!userId || !userName) {
+    return null;
+  }
 
-      return null;
+  const checkPath = allowedPaths.some((element) => {
+    return path.includes(element);
+  });
 
+  if (checkPath) {
+    req.body.createdBy = userId;
+    req.body.updatedBy = userId;
+    req.body.createdByDisplayValue = userName;
+    req.body.updatedByDisplayValue = userName;
+
+    if (path == "/createUser") {
+      req.body.active = true;
     }
+  }
 
-    const checkPath = allowedPaths.some((element)=>{
+  req.body.updatedBy = userId;
+  req.body.updatedByDisplayValue = userName;
+};
 
-        return path.includes(element);
+const itemProcessor = async(body) => {
 
-    });
+  const {
+    items,
+    createdBy,
+    updatedBy,
+    createdByDisplayValue,
+    updatedByDisplayValue,
+    
+  } = body;
 
-    if(checkPath){
+  const options = {upsert: true, new: true, setDefaultsOnInsert: true};
+  const result = [];
 
-      req.body.createdBy = userId;
-      req.body.updatedBy = userId;
-      req.body.createdByDisplayValue = userName;
-      req.body.updatedByDisplayValue = userName;
+  try {
 
-      if(path == '/createUser'){
+    for(let element of items) {
+      
+      let query = {$or:[{'barcode':element.barcode},{'internalcode':element.internalcode}]};
 
-        req.body.active = true;
-  
+
+      let update = {
+        name: element.name,
+        price: element.price,
+        barcode: element.barcode,
+        internalcode: element.internalcode,
+        createdBy: createdBy,
+        updatedBy: updatedBy,
+        createdByDisplayValue: createdByDisplayValue,
+        updatedByDisplayValue: updatedByDisplayValue
       }
 
-    }
-  
-    req.body.updatedBy = userId;
-    req.body.updatedByDisplayValue = userName;
-    //status
-}
+      let procRes = await Item.findOneAndUpdate(query,update,options);
+      
+      result.push(procRes);
 
-module.exports = {calculator, addDefaultFields};
-  
+    }
+
+    return(result);
+
+  } catch (error) {
+    
+    return error;
+
+  }
+};
+
+module.exports = { calculator, addDefaultFields, itemProcessor };

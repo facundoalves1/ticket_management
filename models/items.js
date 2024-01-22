@@ -1,36 +1,86 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+const mongoose_delete = require("mongoose-delete");
 
-const ItemSchema = new mongoose.Schema({
-
+const ItemSchema = new mongoose.Schema(
+  {
     name: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
 
     price: {
-        type: Number,
-        required: true
+      type: Number,
+      required: true,
     },
 
-    code: {
-        type: Number,
-        require: true
+    barcode: {
+      type: String,
+      required: true,
     },
 
-    category: {
+    internalcode: {
+      type: String,
+      requred: true
+    },
 
-        type: String,
-        required: true,
-        default: "General"
+    createdBy: {
+      type: mongoose.Types.ObjectId,
+      required: true,
+    },
 
-    }
+    updatedBy: {
+      type: mongoose.Types.ObjectId,
+      required: true,
+    },
 
-},
-{
+    createdByDisplayValue: {
+      type: String,
+      required: true,
+    },
+
+    updatedByDisplayValue: {
+      type: String,
+      required: true,
+    },
+  },
+  {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
     timestamps: true,
-    versionKey: false, 
+    versionKey: false,
+    statics: {
+      findByUser(_id) {
+        return this.aggregate([
+          {
+            $lookup: {
+              from: "users",
+              localField: "createdBy",
+              foreignField: "_id",
+              as: "user",
+            },
+          },
+          {
+            $match: {
+              createdBy: new mongoose.Types.ObjectId(_id),
+            },
+          },
+          {
+            $unwind: "$user",
+          },
+          {
+            $project: {
+              "user.password": 0,
+            },
+          },
+        ]);
+      },
+    },
+  }
+);
+
+ItemSchema.plugin(mongoose_delete, {
+  overrideMethods: "all",
+  deletedAt: true,
 });
 
-module.exports = mongoose.model('Item',ItemSchema);
+module.exports = mongoose.model("Item", ItemSchema);
