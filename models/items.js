@@ -20,7 +20,7 @@ const ItemSchema = new mongoose.Schema(
 
     internalcode: {
       type: String,
-      requred: true
+      requred: false
     },
 
     createdBy: {

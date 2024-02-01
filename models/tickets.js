@@ -20,7 +20,7 @@ const ItemSchema = new mongoose.Schema({
 
   internalcode: {
     type: String,
-    required: true
+    required: false
   },
 
   quantity: {
